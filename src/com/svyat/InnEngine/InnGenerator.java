@@ -47,6 +47,7 @@ public class InnGenerator {
 
         if (control_number==Integer.parseInt( String.valueOf(str.charAt(9)))) return true;
         else return false;
+
     }
 
 }
