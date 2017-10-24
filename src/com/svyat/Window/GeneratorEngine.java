@@ -12,6 +12,6 @@ import java.awt.event.ActionListener;
 public class GeneratorEngine implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
-        InnGenerator inn_gen = new InnGenerator(12);
+        InnGenerator inn_gen = new InnGenerator(10);
     }
 }
