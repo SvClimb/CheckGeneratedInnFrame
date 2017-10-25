@@ -1,23 +1,39 @@
 package com.svyat.InnEngine;
 
+import com.svyat.Window.Frame;
+
 import java.util.Random;
 
 /**
  * Created by svcli on 24.10.2017.
  */
 public class InnGenerator {
-    Random random = new Random();
+
+
     private long inn10;
     private long inn12;
+    private boolean inn_true = false;
     private static byte[] spep10 = {2, 4, 10, 3, 5, 9, 4, 6, 8};
     private static byte[] spep12_1 = {7, 2, 4, 10, 3, 5, 9, 4, 6, 8};
     private static byte[] spep12_2 = {3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8};
+
+    public long getInn10() {
+        return inn10;
+    }
+
+    public long getInn12() {
+        return inn12;
+    }
+
     public InnGenerator(int i)
     {
-        if (i == 10){
-            inn10 = Inn_10_gen();
-            System.out.println(inn10);
-            System.out.println(Check_10_inn(inn10));
+        if (i == 10) {
+            while (inn_true != true) {
+                inn10 = Inn_10_gen();
+                inn_true = Check_10_inn(inn10);
+                System.out.println(inn10);
+                System.out.println(Check_10_inn(inn10));
+            }
         }
         else if (i == 12){
             inn12 = Inn_12_gen();
@@ -47,6 +63,9 @@ public class InnGenerator {
 
         if (control_number==Integer.parseInt( String.valueOf(str.charAt(9)))) return true;
         else return false;
+
+    }
+    private void TestSetText(){
 
     }
 

@@ -1,5 +1,7 @@
 package com.svyat.Window;
 
+import com.svyat.InnEngine.InnGenerator;
+
 import javax.swing.*;
 
 /**
@@ -8,7 +10,7 @@ import javax.swing.*;
 public class Frame {
     // Объявление всех компонентов калькулятора.
     JPanel windowContent;
-    JTextField field_gener_inn;
+    static JTextField field_gener_inn;
     JTextField field_check_inn;
     JButton button_check;
     JButton button_gener;
@@ -16,12 +18,13 @@ public class Frame {
     JLabel label_check_inn;
 
 
+
     // В конструкторе создаются все компоненты
     // и добавляются на фрейм с помощью комбинации
     // Borderlayout и Gridlayout
     public Frame() {
         //Создаём фрейм и задаём его основную панель
-        JFrame frame = new JFrame("Генератор и проверка ИНН");
+        JFrame frame = new JFrame("Проверка и генерация ИНН");
         windowContent = new JPanel();
         windowContent.setLayout(null);
 
@@ -62,11 +65,12 @@ public class Frame {
         // Наконец, отображаем окно
       //  frame.setSize(400,200);
         frame.setBounds(760, 390, 400, 200);
+        frame.setResizable(false);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
+// обработчик на кнопки
         GeneratorEngine generatorEngine = new GeneratorEngine();
-        button_check.addActionListener(generatorEngine);
+        button_gener.addActionListener(generatorEngine);
     }
 }

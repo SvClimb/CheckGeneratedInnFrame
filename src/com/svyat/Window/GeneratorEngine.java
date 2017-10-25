@@ -13,5 +13,6 @@ public class GeneratorEngine implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         InnGenerator inn_gen = new InnGenerator(10);
+        Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn10()));
     }
 }
