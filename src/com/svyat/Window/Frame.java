@@ -16,8 +16,12 @@ public class Frame {
     JButton button_gener;
     JLabel label_gener_inn;
     JLabel label_check_inn;
+    static JComboBox comboBox;
 
 
+    public JComboBox getComboBox() {
+        return comboBox;
+    }
 
     // В конструкторе создаются все компоненты
     // и добавляются на фрейм с помощью комбинации
@@ -33,18 +37,18 @@ public class Frame {
         label_check_inn.setBounds(20,20, 150, 30);
         windowContent.add(label_check_inn);
 
-        label_gener_inn = new JLabel("Сгенерированный ИНН:");
+        label_gener_inn = new JLabel("Сгенерировать ИНН:");
         label_gener_inn.setBounds(20, 50, 150, 30);
         windowContent.add(label_gener_inn);
 
 
         // создаем поля
         field_check_inn = new JTextField("", 10);
-        field_check_inn.setBounds(170, 20, 150, 30);
+        field_check_inn.setBounds(230, 20, 150, 30);
         windowContent.add(field_check_inn);
 
         field_gener_inn = new JTextField("", 10);
-        field_gener_inn.setBounds(170, 50, 150, 30);
+        field_gener_inn.setBounds(230, 50, 150, 30);
         field_gener_inn.setEditable(false);
         windowContent.add(field_gener_inn);
 
@@ -56,6 +60,12 @@ public class Frame {
         button_gener = new JButton("Сгенерировать ИНН");
         button_gener.setBounds(170, 100, 150, 40);
         windowContent.add(button_gener);
+
+        // создаем комбо-бокс
+        String[] items = {"10","12"};
+        comboBox = new JComboBox(items);
+        comboBox.setBounds(170, 50, 50, 30);
+        windowContent.add(comboBox);
 
         // делаем размер окна достаточным
         // для того, чтобы вместить все компоненты
