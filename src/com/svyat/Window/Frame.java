@@ -83,6 +83,7 @@ public class Frame {
 // обработчик на кнопки
         GeneratorEngine generatorEngine = new GeneratorEngine(this);
         button_gener.addActionListener(generatorEngine);
+        button_check.addActionListener(generatorEngine);
     }
 
     public class GeneratorEngine implements ActionListener {
@@ -95,17 +96,31 @@ public class Frame {
         @Override
         public void actionPerformed(ActionEvent e) {
             JButton clickedButton = (JButton) e.getSource();
-            String dispFieldText=parent.field_check_inn.getText();
-            long checkInnLong = 0L;
-            if (!"".equals(dispFieldText)){
-                checkInnLong = Long.parseLong(dispFieldText);
-            }
+
+
             Object src = e.getSource();
 
-            int setInt = Integer.valueOf((String)comboBox.getSelectedItem());
-            InnGenerator inn_gen = new InnGenerator(setInt);
-            if (setInt == 10) Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn10()));
-            else if(setInt == 12) Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn12()));
+            if (src == parent.button_gener) {
+                int setInt = Integer.valueOf((String) comboBox.getSelectedItem());
+                InnGenerator inn_gen = new InnGenerator(setInt);
+                if (setInt == 10) Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn10()));
+                else if (setInt == 12) Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn12()));
+            }
+
+            else if (src == parent.button_check){
+                String dispFieldText=parent.field_check_inn.getText();
+                int lengthDisplayFieldText = dispFieldText.length();
+                long innForCheck = 0L;
+                if (!"".equals(dispFieldText)){
+                    if (lengthDisplayFieldText == 10 || (lengthDisplayFieldText == 12)) {
+                        innForCheck = Long.parseLong(dispFieldText);
+                        InnGenerator inn_gen = new InnGenerator(innForCheck);
+                    }
+
+                    else System.out.println("Не верный формат");
+                }
+                else System.out.println("Введи ИНН для проверки");
+            }
         }
     }
 
