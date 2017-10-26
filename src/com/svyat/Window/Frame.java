@@ -81,13 +81,27 @@ public class Frame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 // обработчик на кнопки
-        GeneratorEngine generatorEngine = new GeneratorEngine();
+        GeneratorEngine generatorEngine = new GeneratorEngine(this);
         button_gener.addActionListener(generatorEngine);
     }
 
-    private class GeneratorEngine implements ActionListener {
+    public class GeneratorEngine implements ActionListener {
+        Frame parent;
+
+        GeneratorEngine(Frame parent){
+            this.parent = parent;
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
+            JButton clickedButton = (JButton) e.getSource();
+            String dispFieldText=parent.field_check_inn.getText();
+            long checkInnLong = 0L;
+            if (!"".equals(dispFieldText)){
+                checkInnLong = Long.parseLong(dispFieldText);
+            }
+            Object src = e.getSource();
+
             int setInt = Integer.valueOf((String)comboBox.getSelectedItem());
             InnGenerator inn_gen = new InnGenerator(setInt);
             if (setInt == 10) Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn10()));
