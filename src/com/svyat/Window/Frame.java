@@ -20,11 +20,9 @@ public class Frame {
     JLabel label_check_inn;
     static JComboBox comboBox;
 
-
     public JComboBox getComboBox() {
         return comboBox;
     }
-
     // В конструкторе создаются все компоненты
     // и добавляются на фрейм с помощью комбинации
     // Borderlayout и Gridlayout
@@ -80,7 +78,7 @@ public class Frame {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-// обработчик на кнопки
+        // обработчик на кнопки
         GeneratorEngine generatorEngine = new GeneratorEngine(this);
         button_gener.addActionListener(generatorEngine);
         button_check.addActionListener(generatorEngine);
@@ -118,10 +116,18 @@ public class Frame {
                     try {
                         int lengthDisplayFieldText = dispFieldText.length();
                         long innForCheck = Long.parseLong(dispFieldText);
+                        String statusCheck;
+
                         if (((lengthDisplayFieldText == 10 || lengthDisplayFieldText == 12))) {
                             InnGenerator inn_gen = new InnGenerator(innForCheck);
-                            JOptionPane.showMessageDialog(myAlertPanel, "ИНН " + inn_gen.bool);
-                        } else if ((lengthDisplayFieldText != 10 || lengthDisplayFieldText != 12)) {
+
+                            if (inn_gen.bool == true) statusCheck = ("Корректный");
+                            else statusCheck = ("Некорректный");
+
+                            JOptionPane.showMessageDialog(myAlertPanel,statusCheck +  " ИНН" );
+                        }
+
+                        else if ((lengthDisplayFieldText != 10 || lengthDisplayFieldText != 12)) {
                             JOptionPane.showMessageDialog(myAlertPanel, "ИНН должен содержать 10 или 12 цифр.");
                             Frame.field_check_inn.setText(null);
                         }

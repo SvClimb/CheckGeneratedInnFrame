@@ -70,6 +70,7 @@ public class InnGenerator {
 
     private boolean Check_inn(long in){
         String str = String.valueOf(in);
+
         if (str.length() == 10) {
             int sum = 0;
             int control_number = 0;
@@ -82,6 +83,7 @@ public class InnGenerator {
             if (control_number == Integer.parseInt(String.valueOf(str.charAt(9)))) return true;
             else return false;
         }
+
         else if (str.length() ==12){
             int sum_12_2 = 0;
             int control_number_n1 = 0;
