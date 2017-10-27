@@ -13,7 +13,7 @@ public class Frame {
     // Объявление всех компонентов калькулятора.
     JPanel windowContent;
     static JTextField field_gener_inn;
-    JTextField field_check_inn;
+    static JTextField field_check_inn;
     JButton button_check;
     JButton button_gener;
     JLabel label_gener_inn;
@@ -86,6 +86,8 @@ public class Frame {
         button_check.addActionListener(generatorEngine);
     }
 
+
+
     public class GeneratorEngine implements ActionListener {
         Frame parent;
 
@@ -108,18 +110,28 @@ public class Frame {
             }
 
             else if (src == parent.button_check){
-                String dispFieldText=parent.field_check_inn.getText();
-                int lengthDisplayFieldText = dispFieldText.length();
-                long innForCheck = 0L;
-                if (!"".equals(dispFieldText)){
-                    if (lengthDisplayFieldText == 10 || (lengthDisplayFieldText == 12)) {
-                        innForCheck = Long.parseLong(dispFieldText);
-                        InnGenerator inn_gen = new InnGenerator(innForCheck);
-                    }
 
-                    else System.out.println("Не верный формат");
+                String dispFieldText=parent.field_check_inn.getText();
+
+                JPanel myAlertPanel = new JPanel();
+                if (!"".equals(dispFieldText)){
+                    try {
+                        int lengthDisplayFieldText = dispFieldText.length();
+                        long innForCheck = Long.parseLong(dispFieldText);
+                        if (((lengthDisplayFieldText == 10 || lengthDisplayFieldText == 12))) {
+                            InnGenerator inn_gen = new InnGenerator(innForCheck);
+                            JOptionPane.showMessageDialog(myAlertPanel, "ИНН " + inn_gen.bool);
+                        } else if ((lengthDisplayFieldText != 10 || lengthDisplayFieldText != 12)) {
+                            JOptionPane.showMessageDialog(myAlertPanel, "ИНН должен содержать 10 или 12 цифр.");
+                            Frame.field_check_inn.setText(null);
+                        }
+                    }
+                    catch (NumberFormatException n){
+                        JOptionPane.showMessageDialog(myAlertPanel, "ИНН должен содержать только цифры.");
+                        Frame.field_check_inn.setText(null);
+                    }
                 }
-                else System.out.println("Введи ИНН для проверки");
+                else JOptionPane.showMessageDialog(myAlertPanel,"Введите ИНН для проверки.");
             }
         }
     }

@@ -28,9 +28,10 @@ public class InnGenerator {
     public long getInn12() {
         return inn12;
     }
-
+    public boolean bool;
     public InnGenerator(long a){
         System.out.println(this.Check_inn(a));
+        bool = this.Check_inn(a);
     }
 
     public InnGenerator(int i)
