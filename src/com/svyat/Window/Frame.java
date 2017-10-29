@@ -3,9 +3,11 @@ package com.svyat.Window;
 import com.svyat.InnEngine.InnGenerator;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Created by svcli on 24.10.2017.
@@ -18,6 +20,7 @@ public class Frame {
     static JTextField field_quantity_string;
     JButton button_check;
     JButton button_gener;
+    JButton button_createFile;
     JLabel label_gener_inn;
     JLabel label_check_inn;
     JLabel label_gener_data;
@@ -73,6 +76,10 @@ public class Frame {
         button_gener.setBounds(390, 55, 150, 30);
         windowContent.add(button_gener);
 
+        button_createFile = new JButton("Создать файл");
+        button_createFile.setBounds(390, 90, 150, 30);
+        windowContent.add(button_createFile);
+
         // создаем комбо-бокс кол-во цифр в ИНН и тип создаваемого файла
         String[] itemsLenghtInn = {"10","12"};
         comboBoxLengthINN = new JComboBox(itemsLenghtInn);
@@ -100,6 +107,7 @@ public class Frame {
         GeneratorEngine generatorEngine = new GeneratorEngine(this);
         button_gener.addActionListener(generatorEngine);
         button_check.addActionListener(generatorEngine);
+        button_createFile.addActionListener(generatorEngine);
     }
 
 
@@ -160,6 +168,18 @@ public class Frame {
                     }
                 }
                 else JOptionPane.showMessageDialog(myAlertPanel,"Введите ИНН для проверки.");
+            }
+
+            else if (src == parent.button_createFile){
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("*.CSV","*.*");
+                JFileChooser chooserSaveDialog = new JFileChooser();
+                chooserSaveDialog.setFileFilter(filter);
+                chooserSaveDialog.setDialogTitle("Сохранить файл");
+                chooserSaveDialog.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+                int q = chooserSaveDialog.showDialog(null, "Создать файл");
+
+
             }
         }
     }
