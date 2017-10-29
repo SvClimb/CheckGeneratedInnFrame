@@ -3,6 +3,7 @@ package com.svyat.Window;
 import com.svyat.InnEngine.InnGenerator;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,14 +15,17 @@ public class Frame {
     JPanel windowContent;
     static JTextField field_gener_inn;
     static JTextField field_check_inn;
+    static JTextField field_quantity_string;
     JButton button_check;
     JButton button_gener;
     JLabel label_gener_inn;
     JLabel label_check_inn;
-    static JComboBox comboBox;
+    JLabel label_gener_data;
+    static JComboBox comboBoxLengthINN;
+    static JComboBox comboBoxOperationType;
 
     public JComboBox getComboBox() {
-        return comboBox;
+        return comboBoxLengthINN;
     }
     // В конструкторе создаются все компоненты
     // и добавляются на фрейм с помощью комбинации
@@ -38,34 +42,48 @@ public class Frame {
         windowContent.add(label_check_inn);
 
         label_gener_inn = new JLabel("Сгенерировать ИНН:");
-        label_gener_inn.setBounds(20, 50, 150, 30);
+        label_gener_inn.setBounds(20, 55, 150, 30);
         windowContent.add(label_gener_inn);
 
+        label_gener_data = new JLabel("Создать файл ТД:");
+        label_gener_data.setBounds(20, 90, 150, 30);
+        windowContent.add(label_gener_data);
 
-        // создаем поля
+
+        // создаем поля для ввода
         field_check_inn = new JTextField("", 10);
         field_check_inn.setBounds(230, 20, 150, 30);
         windowContent.add(field_check_inn);
 
         field_gener_inn = new JTextField("", 10);
-        field_gener_inn.setBounds(230, 50, 150, 30);
+        field_gener_inn.setBounds(230, 55, 150, 30);
         field_gener_inn.setEditable(false);
         windowContent.add(field_gener_inn);
 
+        field_quantity_string = new JTextField("", 5);
+        field_quantity_string.setBounds(170, 90, 50, 30);
+        windowContent.add(field_quantity_string);
+
         // создаем кнопки
         button_check = new JButton("Проверить ИНН");
-        button_check.setBounds(20, 100 , 150,  40);
+        button_check.setBounds(390, 20 , 150,  30);
         windowContent.add(button_check);
 
         button_gener = new JButton("Сгенерировать ИНН");
-        button_gener.setBounds(170, 100, 150, 40);
+        button_gener.setBounds(390, 55, 150, 30);
         windowContent.add(button_gener);
 
-        // создаем комбо-бокс
-        String[] items = {"10","12"};
-        comboBox = new JComboBox(items);
-        comboBox.setBounds(170, 50, 50, 30);
-        windowContent.add(comboBox);
+        // создаем комбо-бокс кол-во цифр в ИНН и тип создаваемого файла
+        String[] itemsLenghtInn = {"10","12"};
+        comboBoxLengthINN = new JComboBox(itemsLenghtInn);
+        comboBoxLengthINN.setBounds(170, 55, 50, 30);
+        windowContent.add(comboBoxLengthINN);
+
+        String[] itemsTypeOperation = {"Загрузка мобилы", "Загрузка фиксы", "Обновление данных"};
+        comboBoxOperationType = new JComboBox(itemsTypeOperation);
+        comboBoxOperationType.setBounds(230, 90, 150, 30);
+        windowContent.add(comboBoxOperationType);
+
 
         // делаем размер окна достаточным
         // для того, чтобы вместить все компоненты
@@ -73,7 +91,7 @@ public class Frame {
         frame.setContentPane(windowContent);
 
         // Наконец, отображаем окно
-        frame.setBounds(760, 390, 400, 200);
+        frame.setBounds(760, 390, 560, 200);
         frame.setResizable(false);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,10 +119,14 @@ public class Frame {
             Object src = e.getSource();
 
             if (src == parent.button_gener) {
-                int setInt = Integer.valueOf((String) comboBox.getSelectedItem());
+                int setInt = Integer.valueOf((String) comboBoxLengthINN.getSelectedItem());
                 InnGenerator inn_gen = new InnGenerator(setInt);
-                if (setInt == 10) Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn10()));
-                else if (setInt == 12) Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn12()));
+                if (setInt == 10) {
+                    Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn10()));
+                }
+                else if (setInt == 12) {
+                    Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn12()));
+                }
             }
 
             else if (src == parent.button_check){
