@@ -54,7 +54,7 @@ public class Frame {
 
 
         // создаем поля для ввода
-        field_check_inn = new JTextField("", 10);
+        field_check_inn = new JTextField("", 12);
         field_check_inn.setBounds(230, 20, 150, 30);
         windowContent.add(field_check_inn);
 
@@ -63,8 +63,9 @@ public class Frame {
         field_gener_inn.setEditable(false);
         windowContent.add(field_gener_inn);
 
-        field_quantity_string = new JTextField("", 5);
+        field_quantity_string = new JTextField();
         field_quantity_string.setBounds(170, 90, 50, 30);
+        field_quantity_string.setToolTipText("Количество строк в файле");
         windowContent.add(field_quantity_string);
 
         // создаем кнопки
@@ -84,11 +85,13 @@ public class Frame {
         String[] itemsLenghtInn = {"10","12"};
         comboBoxLengthINN = new JComboBox(itemsLenghtInn);
         comboBoxLengthINN.setBounds(170, 55, 50, 30);
+        comboBoxLengthINN.setToolTipText("Выберите длину ИНН");
         windowContent.add(comboBoxLengthINN);
 
-        String[] itemsTypeOperation = {"Загрузка мобилы", "Загрузка фиксы", "Обновление данных"};
+        String[] itemsTypeOperation = {"Загрузка мобилы", "Загрузка фиксы"}; // "Обновление данных" пока не реализовано
         comboBoxOperationType = new JComboBox(itemsTypeOperation);
         comboBoxOperationType.setBounds(230, 90, 150, 30);
+        comboBoxOperationType.setToolTipText("Тип операции, для которой генерируется файл");
         windowContent.add(comboBoxOperationType);
 
 
@@ -98,6 +101,25 @@ public class Frame {
         frame.setContentPane(windowContent);
 
         // Наконец, отображаем окно
+        String windows = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+        String motif = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+        String metal = "javax.swing.plaf.metal.MetalLookAndFeel";
+
+        // играем о стилями отображения окна
+        try {
+            UIManager.setLookAndFeel(windows);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+        SwingUtilities.updateComponentTreeUI(frame);
+
+
         frame.setBounds(760, 390, 560, 200);
         frame.setResizable(false);
         frame.setVisible(true);
@@ -110,8 +132,6 @@ public class Frame {
         button_createFile.addActionListener(generatorEngine);
     }
 
-
-
     public class GeneratorEngine implements ActionListener {
         Frame parent;
 
@@ -122,8 +142,6 @@ public class Frame {
         @Override
         public void actionPerformed(ActionEvent e) {
             JButton clickedButton = (JButton) e.getSource();
-
-
             Object src = e.getSource();
 
             if (src == parent.button_gener) {
