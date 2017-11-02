@@ -18,12 +18,14 @@ public class Frame {
     static JTextField field_gener_inn;
     static JTextField field_check_inn;
     static JTextField field_quantity_string;
+    static JTextField field_path;
     JButton button_check;
     JButton button_gener;
     JButton button_createFile;
     JLabel label_gener_inn;
     JLabel label_check_inn;
     JLabel label_gener_data;
+    JLabel label_path;
     static JComboBox comboBoxLengthINN;
     static JComboBox comboBoxOperationType;
 
@@ -52,6 +54,10 @@ public class Frame {
         label_gener_data.setBounds(20, 90, 150, 30);
         windowContent.add(label_gener_data);
 
+        label_path = new JLabel("Путь:");
+        label_path.setBounds(20, 125, 50, 30);
+        windowContent.add(label_path);
+
 
         // создаем поля для ввода
         field_check_inn = new JTextField("", 10);
@@ -63,9 +69,15 @@ public class Frame {
         field_gener_inn.setEditable(false);
         windowContent.add(field_gener_inn);
 
-        field_quantity_string = new JTextField("", 5);
+        field_quantity_string = new JTextField("1", 5);
         field_quantity_string.setBounds(170, 90, 50, 30);
         windowContent.add(field_quantity_string);
+
+        field_path = new JTextField("", 100);
+        field_path.setBounds(80, 125, 300, 30);
+        field_path.setEditable(false);
+        windowContent.add(field_path);
+
 
         // создаем кнопки
         button_check = new JButton("Проверить ИНН");
@@ -158,7 +170,7 @@ public class Frame {
                         }
 
                         else if ((lengthDisplayFieldText != 10 || lengthDisplayFieldText != 12)) {
-                            JOptionPane.showMessageDialog(myAlertPanel, "ИНН должен содержать 10 или 12 цифр.");
+                            JOptionPane.showMessageDialog(myAlertPanel, "ИНН должен содержать 10 или 12 цифр.", "Ошибка", 2);
                             Frame.field_check_inn.setText(null);
                         }
                     }
