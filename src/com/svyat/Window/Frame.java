@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Created by svcli on 24.10.2017.
@@ -32,6 +34,7 @@ public class Frame {
     public JComboBox getComboBox() {
         return comboBoxLengthINN;
     }
+
     // В конструкторе создаются все компоненты
     // и добавляются на фрейм с помощью комбинации
     // Borderlayout и Gridlayout
@@ -43,7 +46,7 @@ public class Frame {
 
         // создаем заголовки полей
         label_check_inn = new JLabel("ИНН для проверки:");
-        label_check_inn.setBounds(20,20, 150, 30);
+        label_check_inn.setBounds(20, 20, 150, 30);
         windowContent.add(label_check_inn);
 
         label_gener_inn = new JLabel("Сгенерировать ИНН:");
@@ -81,7 +84,7 @@ public class Frame {
 
         // создаем кнопки
         button_check = new JButton("Проверить ИНН");
-        button_check.setBounds(390, 20 , 150,  30);
+        button_check.setBounds(390, 20, 150, 30);
         windowContent.add(button_check);
 
         button_gener = new JButton("Сгенерировать ИНН");
@@ -93,7 +96,7 @@ public class Frame {
         windowContent.add(button_createFile);
 
         // создаем комбо-бокс кол-во цифр в ИНН и тип создаваемого файла
-        String[] itemsLenghtInn = {"10","12"};
+        String[] itemsLenghtInn = {"10", "12"};
         comboBoxLengthINN = new JComboBox(itemsLenghtInn);
         comboBoxLengthINN.setBounds(170, 55, 50, 30);
         windowContent.add(comboBoxLengthINN);
@@ -123,11 +126,10 @@ public class Frame {
     }
 
 
-
     public class GeneratorEngine implements ActionListener {
         Frame parent;
 
-        GeneratorEngine(Frame parent){
+        GeneratorEngine(Frame parent) {
             this.parent = parent;
         }
 
@@ -143,18 +145,15 @@ public class Frame {
                 InnGenerator inn_gen = new InnGenerator(setInt);
                 if (setInt == 10) {
                     Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn10()));
-                }
-                else if (setInt == 12) {
+                } else if (setInt == 12) {
                     Frame.field_gener_inn.setText(String.valueOf(inn_gen.getInn12()));
                 }
-            }
+            } else if (src == parent.button_check) {
 
-            else if (src == parent.button_check){
-
-                String dispFieldText=parent.field_check_inn.getText();
+                String dispFieldText = parent.field_check_inn.getText();
 
                 JPanel myAlertPanel = new JPanel();
-                if (!"".equals(dispFieldText)){
+                if (!"".equals(dispFieldText)) {
                     try {
                         int lengthDisplayFieldText = dispFieldText.length();
                         long innForCheck = Long.parseLong(dispFieldText);
@@ -166,34 +165,34 @@ public class Frame {
                             if (inn_gen.bool == true) statusCheck = ("Корректный");
                             else statusCheck = ("Некорректный");
 
-                            JOptionPane.showMessageDialog(myAlertPanel,statusCheck +  " ИНН" );
-                        }
-
-                        else if ((lengthDisplayFieldText != 10 || lengthDisplayFieldText != 12)) {
+                            JOptionPane.showMessageDialog(myAlertPanel, statusCheck + " ИНН");
+                        } else if ((lengthDisplayFieldText != 10 || lengthDisplayFieldText != 12)) {
                             JOptionPane.showMessageDialog(myAlertPanel, "ИНН должен содержать 10 или 12 цифр.", "Ошибка", 2);
                             Frame.field_check_inn.setText(null);
                         }
-                    }
-                    catch (NumberFormatException n){
+                    } catch (NumberFormatException n) {
                         JOptionPane.showMessageDialog(myAlertPanel, "ИНН должен содержать только цифры.");
                         Frame.field_check_inn.setText(null);
                     }
-                }
-                else JOptionPane.showMessageDialog(myAlertPanel,"Введите ИНН для проверки.");
-            }
-
-            else if (src == parent.button_createFile){
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("*.CSV","*.*");
+                } else JOptionPane.showMessageDialog(myAlertPanel, "Введите ИНН для проверки.");
+            } else if (src == parent.button_createFile) {
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("*.CSV", "*.*");
                 JFileChooser chooserSaveDialog = new JFileChooser();
                 chooserSaveDialog.setFileFilter(filter);
                 chooserSaveDialog.setDialogTitle("Сохранить файл");
                 chooserSaveDialog.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                if (chooserSaveDialog.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    try (FileWriter fw = new FileWriter(chooserSaveDialog.getSelectedFile())) {
+                        fw.write("test");
+                    } catch (IOException eio) {
+                        System.out.println("Всё погибло!");
 
-                int q = chooserSaveDialog.showDialog(null, "Создать файл");
 
+                    }
 
+                }
             }
         }
-    }
 
+    }
 }
