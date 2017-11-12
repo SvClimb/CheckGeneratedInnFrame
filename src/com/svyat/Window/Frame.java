@@ -109,10 +109,10 @@ public class Frame {
 
         // делаем размер окна достаточным
         // для того, чтобы вместить все компоненты
-        frame.pack();
+       // frame.pack();
         frame.setContentPane(windowContent);
 
-        // Наконец, отображаем окно
+        // отображаем окно
         frame.setBounds(760, 390, 560, 200);
         frame.setResizable(false);
         frame.setVisible(true);
@@ -176,14 +176,14 @@ public class Frame {
                     }
                 } else JOptionPane.showMessageDialog(myAlertPanel, "Введите ИНН для проверки.");
             } else if (src == parent.button_createFile) {
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("*.CSV", "*.*");
                 JFileChooser chooserSaveDialog = new JFileChooser();
-                chooserSaveDialog.setFileFilter(filter);
+                chooserSaveDialog.setFileFilter(new FileNameExtensionFilter("*.CSV", "*.*"));
                 chooserSaveDialog.setDialogTitle("Сохранить файл");
                 chooserSaveDialog.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 if (chooserSaveDialog.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                     try (FileWriter fw = new FileWriter(chooserSaveDialog.getSelectedFile())) {
-                        fw.write("test");
+                        InnGenerator inn_gen = new InnGenerator(10);
+                        fw.write(inn_gen.getInn10() + "");
                     } catch (IOException eio) {
                         System.out.println("Всё погибло!");
 
