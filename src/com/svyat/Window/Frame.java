@@ -39,7 +39,7 @@ public class Frame {
         windowContent = new JPanel();
         windowContent.setLayout(null);
 
-        // создаем заголовки полей
+        // создаем заголовки
         label_check_inn = new JLabel("ИНН для проверки:");
         label_check_inn.setBounds(20,20, 150, 30);
         windowContent.add(label_check_inn);
