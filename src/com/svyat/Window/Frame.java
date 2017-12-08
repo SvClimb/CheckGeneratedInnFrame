@@ -39,6 +39,14 @@ public class Frame {
         windowContent = new JPanel();
         windowContent.setLayout(null);
 
+        // создаем меню
+        JMenuBar menuBar = new JMenuBar();
+        frame.setJMenuBar(menuBar);
+
+        JMenu fileMenu = new JMenu("File");
+
+        menuBar.add(fileMenu);
+
         // создаем заголовки полей
         label_check_inn = new JLabel("ИНН для проверки:");
         label_check_inn.setBounds(20,20, 150, 30);
@@ -176,7 +184,7 @@ public class Frame {
                         }
 
                         else if ((lengthDisplayFieldText != 10 || lengthDisplayFieldText != 12)) {
-                            JOptionPane.showMessageDialog(myAlertPanel, "ИНН должен содержать 10 или 12 цифр.");
+                            JOptionPane.showMessageDialog(myAlertPanel, "ИНН должен содержать ровно 10 или 12 цифр.");
                             Frame.field_check_inn.setText(null);
                         }
                     }
