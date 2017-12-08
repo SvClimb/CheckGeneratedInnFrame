@@ -39,7 +39,7 @@ public class Frame {
         windowContent = new JPanel();
         windowContent.setLayout(null);
 
-        // создаем меню
+        // создаем меню попытаться.
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
 
