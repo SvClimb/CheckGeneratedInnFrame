@@ -18,6 +18,7 @@ public class Frame {
     static JTextField field_gener_inn;
     static JTextField field_check_inn;
     static JTextField field_quantity_string;
+    static JTextField field_path_to_file;
     JButton button_check;
     JButton button_gener;
     JButton button_createFile;
@@ -67,6 +68,11 @@ public class Frame {
         field_quantity_string.setBounds(170, 90, 50, 30);
         windowContent.add(field_quantity_string);
 
+        field_path_to_file = new JTextField("", 15);
+        field_path_to_file.setBounds(20,125, 360, 30);
+        field_path_to_file.setEditable(false);
+        windowContent.add(field_path_to_file);
+
         // создаем кнопки
         button_check = new JButton("Проверить ИНН");
         button_check.setBounds(390, 20 , 150,  30);
@@ -91,6 +97,41 @@ public class Frame {
         comboBoxOperationType.setBounds(230, 90, 150, 30);
         windowContent.add(comboBoxOperationType);
 
+        // Добавляем меню-бар
+
+        JMenuBar menuBar = new JMenuBar();
+        windowContent.add(menuBar);
+
+        JMenu fileMenu = new JMenu("File");
+
+        JMenu newMenu = new JMenu("New");
+        fileMenu.add(newMenu);
+
+        JMenuItem txtFileItem = new JMenuItem("Text file");
+        newMenu.add(txtFileItem);
+
+        JMenuItem imgFileItem = new JMenuItem("Image file");
+        newMenu.add(imgFileItem);
+
+        JMenuItem folderItem = new JMenuItem("Folder");
+        newMenu.add(folderItem);
+
+        JMenuItem openItem = new JMenuItem("Open");
+        fileMenu.add(openItem);
+
+        JMenuItem closeItem = new JMenuItem("Close");
+        fileMenu.add(closeItem);
+
+        JMenuItem closeAllItem = new JMenuItem("Close all");
+        fileMenu.add(closeAllItem);
+
+        fileMenu.addSeparator();
+
+        JMenuItem exitItem = new JMenuItem("Exit");
+        fileMenu.add(exitItem);
+        menuBar.add(fileMenu);
+
+        frame.setJMenuBar(menuBar);
 
         // делаем размер окна достаточным
         // для того, чтобы вместить все компоненты
@@ -98,7 +139,7 @@ public class Frame {
         frame.setContentPane(windowContent);
 
         // Наконец, отображаем окно
-        frame.setBounds(760, 390, 560, 200);
+        frame.setBounds(760, 390, 560, 250);
         frame.setResizable(false);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -175,10 +216,9 @@ public class Frame {
                 JFileChooser chooserSaveDialog = new JFileChooser();
                 chooserSaveDialog.setFileFilter(filter);
                 chooserSaveDialog.setDialogTitle("Сохранить файл");
-                chooserSaveDialog.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-                int q = chooserSaveDialog.showDialog(null, "Создать файл");
-
+                chooserSaveDialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int q = chooserSaveDialog.showDialog(null, "Выбрать папку");
+                field_path_to_file.setText(chooserSaveDialog.getSelectedFile().getAbsolutePath());
 
             }
         }

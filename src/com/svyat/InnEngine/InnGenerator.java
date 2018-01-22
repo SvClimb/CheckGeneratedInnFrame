@@ -30,7 +30,7 @@ public class InnGenerator {
     }
     public boolean bool;
     public InnGenerator(long a){
-        System.out.println(this.Check_inn(a));
+        //System.out.println(this.Check_inn(a));
         bool = this.Check_inn(a);
     }
 
@@ -41,8 +41,8 @@ public class InnGenerator {
             while (inn_true != true) {
                 inn10 = Inn_10_gen();
                 inn_true = Check_inn(inn10);
-                System.out.println(inn10);
-                System.out.println(Check_inn(inn10));
+                //System.out.println(inn10);
+                //System.out.println(Check_inn(inn10));
             }
         }
         else if (i == 12) {
@@ -50,8 +50,8 @@ public class InnGenerator {
             while (inn_true != true) {
                 inn12 = Inn_12_gen();
                 inn_true = Check_inn(inn12);
-                System.out.println(inn12);
-                System.out.println(Check_inn(inn12));
+                //System.out.println(inn12);
+               // System.out.println(Check_inn(inn12));
             }
 
         }
