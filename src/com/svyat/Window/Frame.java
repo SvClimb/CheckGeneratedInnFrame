@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import static javax.swing.JOptionPane.*;
+
 /**
  * Created by svcli on 24.10.2017.
  */
@@ -19,12 +21,13 @@ public class Frame {
     static JTextField field_check_inn;
     static JTextField field_quantity_string;
     static JTextField field_path_to_file;
-    JButton button_check;
-    JButton button_gener;
-    JButton button_createFile;
-    JLabel label_gener_inn;
-    JLabel label_check_inn;
-    JLabel label_gener_data;
+    static JButton button_check;
+    static JButton button_gener;
+    static JButton button_createFile;
+    static JButton button_setFolder;
+    static JLabel label_gener_inn;
+    static JLabel label_check_inn;
+    static JLabel label_gener_data;
     static JComboBox comboBoxLengthINN;
     static JComboBox comboBoxOperationType;
 
@@ -69,7 +72,7 @@ public class Frame {
         windowContent.add(field_quantity_string);
 
         field_path_to_file = new JTextField("", 15);
-        field_path_to_file.setBounds(20,125, 360, 30);
+        field_path_to_file.setBounds(170,125, 210, 30);
         field_path_to_file.setEditable(false);
         windowContent.add(field_path_to_file);
 
@@ -85,6 +88,10 @@ public class Frame {
         button_createFile = new JButton("Создать файл");
         button_createFile.setBounds(390, 90, 150, 30);
         windowContent.add(button_createFile);
+
+        button_setFolder = new JButton("Выбрать папку");
+        button_setFolder.setBounds(390, 125, 150,30);
+        windowContent.add(button_setFolder);
 
         // создаем комбо-бокс кол-во цифр в ИНН и тип создаваемого файла
         String[] itemsLenghtInn = {"10","12"};
@@ -149,6 +156,7 @@ public class Frame {
         button_gener.addActionListener(generatorEngine);
         button_check.addActionListener(generatorEngine);
         button_createFile.addActionListener(generatorEngine);
+        button_setFolder.addActionListener(generatorEngine);
     }
 
 
@@ -195,31 +203,32 @@ public class Frame {
                             if (inn_gen.bool == true) statusCheck = ("Корректный");
                             else statusCheck = ("Некорректный");
 
-                            JOptionPane.showMessageDialog(myAlertPanel,statusCheck +  " ИНН" );
+                            JOptionPane.showMessageDialog(myAlertPanel,statusCheck +  " ИНН" , "Результат проверки", PLAIN_MESSAGE);
                         }
 
                         else if ((lengthDisplayFieldText != 10 || lengthDisplayFieldText != 12)) {
-                            JOptionPane.showMessageDialog(myAlertPanel, "ИНН должен содержать 10 или 12 цифр.");
+                            JOptionPane.showMessageDialog(myAlertPanel, "ИНН может содержать 10 или 12 цифр.", "Ошибка введенных данных", ERROR_MESSAGE);
                             Frame.field_check_inn.setText(null);
                         }
                     }
                     catch (NumberFormatException n){
-                        JOptionPane.showMessageDialog(myAlertPanel, "ИНН должен содержать только цифры.");
+                        JOptionPane.showMessageDialog(myAlertPanel, "ИНН может содержать только цифры.","Ошибка введенных данных", ERROR_MESSAGE );
                         Frame.field_check_inn.setText(null);
                     }
                 }
-                else JOptionPane.showMessageDialog(myAlertPanel,"Введите ИНН для проверки.");
+                else JOptionPane.showMessageDialog(myAlertPanel,"Введите ИНН для проверки.", "Ошибка введенных данных", INFORMATION_MESSAGE);
             }
 
-            else if (src == parent.button_createFile){
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("*.CSV","*.*");
+            else if (src == parent.button_setFolder){
+              //  FileNameExtensionFilter filter = new FileNameExtensionFilter("*.CSV","*.*");
                 JFileChooser chooserSaveDialog = new JFileChooser();
-                chooserSaveDialog.setFileFilter(filter);
-                chooserSaveDialog.setDialogTitle("Сохранить файл");
+           //     chooserSaveDialog.setFileFilter(filter);
+                chooserSaveDialog.setDialogTitle("Выбрать папку");
                 chooserSaveDialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int q = chooserSaveDialog.showDialog(null, "Выбрать папку");
-                field_path_to_file.setText(chooserSaveDialog.getSelectedFile().getAbsolutePath());
-
+                int q = chooserSaveDialog.showDialog(button_setFolder, "Выбрать папку");
+                if (q==0) {
+                    field_path_to_file.setText(chooserSaveDialog.getSelectedFile().getAbsolutePath());
+                }
             }
         }
     }
